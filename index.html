@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMINAMAVI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand-logo" href="index.html">EMINAMAVI</a>
+    <nav class="site-navigation" aria-label="Asosiy menyu">
+      <a href="#about">Biz haqimizda</a>
+      <button id="favorites-button" class="text-button favorites-button" type="button" aria-label="Sevimlilar">♡ <span>Sevimlilar</span> <b id="favorites-count">0</b></button>
+      <button id="auth-button" class="text-button">Sign up</button>
+      <button id="profile-button" class="profile-button hidden"><span id="user-avatar" class="user-avatar">U</span><span>Profil</span></button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="new-arrivals" id="new-arrivals">
+      <p class="eyebrow">New</p>
+      <h1>Yangi mahsulotlar</h1>
+      <div class="top-carousel-heading">
+        <p class="section-label">Barcha yangi mahsulotlar</p>
+        <div id="top-carousel-controls" class="carousel-controls hidden">
+          <button id="top-previous-button" class="circle-button" aria-label="Oldingi yangi mahsulot">←</button>
+          <button id="top-next-button" class="circle-button" aria-label="Keyingi yangi mahsulot">→</button>
+        </div>
+      </div>
+      <div class="carousel-window"><div id="top-carousel-track" class="carousel-track"></div></div>
+      <div id="top-carousel-dots" class="carousel-dots" aria-label="Yangi mahsulotlar karuseli"></div>
+      <section class="sale-carousel-section" aria-labelledby="sale-title">
+        <div class="top-carousel-heading">
+          <div><p class="eyebrow">Aksiya</p><h2 id="sale-title">Chegirmalar</h2></div>
+          <div id="sale-carousel-controls" class="carousel-controls hidden">
+            <button id="sale-previous-button" class="circle-button" aria-label="Oldingi aksiya mahsuloti">←</button>
+            <button id="sale-next-button" class="circle-button" aria-label="Keyingi aksiya mahsuloti">→</button>
+          </div>
+        </div>
+        <div class="carousel-window"><div id="sale-carousel-track" class="carousel-track"></div></div>
+        <div id="sale-carousel-dots" class="carousel-dots" aria-label="Chegirmalar karuseli"></div>
+      </section>
+      <section class="sale-carousel-section" aria-labelledby="clothing-title">
+        <div class="top-carousel-heading">
+          <div><p class="eyebrow">Kolleksiya</p><h2 id="clothing-title">Kiyimlar</h2></div>
+          <div id="clothing-carousel-controls" class="carousel-controls">
+            <button id="clothing-previous-button" class="circle-button" aria-label="Oldingi kiyim">←</button>
+            <button id="clothing-next-button" class="circle-button" aria-label="Keyingi kiyim">→</button>
+          </div>
+        </div>
+        <div class="carousel-window"><div id="clothing-carousel-track" class="carousel-track"></div></div>
+        <div id="clothing-carousel-dots" class="carousel-dots" aria-label="Kiyimlar karuseli"></div>
+      </section>
+      <section class="product-filter" aria-labelledby="filter-title">
+        <div>
+          <p class="eyebrow">Tanlang</p>
+          <h2 id="filter-title">Mahsulotlarni filtrlash</h2>
+        </div>
+        <div class="filter-controls">
+          <label for="product-search">Qidiruv</label>
+          <input id="product-search" type="search" placeholder="Mahsulot qidiring">
+          <label for="category-filter">Kategoriya</label>
+          <select id="category-filter">
+            <option value="all">Barcha kategoriyalar</option>
+            <option value="sumkalar">Sumkalar</option>
+            <option value="kiyimlar">Kiyimlar</option>
+            <option value="romollar">Ro'mollar</option>
+          </select>
+          <label for="sort-filter">Saralash</label>
+          <select id="sort-filter">
+            <option value="newest">Yangilari avval</option>
+            <option value="price-low">Narx: pastdan yuqoriga</option>
+            <option value="price-high">Narx: yuqoridan pastga</option>
+          </select>
+          <label for="currency-filter">Valyuta</label>
+          <select id="currency-filter">
+            <option value="uzs">So'm (so'm)</option>
+            <option value="usd">Dollar ($)</option>
+          </select>
+        </div>
+      </section>
+      <section class="abu-sahiy-section">
+        <img src="assets/L_height.webp" alt="Abu Sahiy binosi">
+        <div class="abu-sahiy-label">Abu Sahiy binosi</div>
+      </section>
+      <div id="category-carousels" class="category-carousels"></div>
+    </section>
+
+    <section id="admin-panel" class="admin-panel hidden">
+      <div class="section-heading">
+        <div><p class="eyebrow">Faqat admin uchun</p><h2>Mahsulotlarni boshqarish</h2></div>
+        <button id="admin-logout" class="outline-button">Chiqish</button>
+      </div>
+      <form id="product-form" class="product-form">
+        <select id="product-category" required>
+          <option value="sumkalar">Sumkalar</option>
+          <option value="kiyimlar">Kiyimlar</option>
+          <option value="romollar">Ro'mollar</option>
+        </select>
+        <input id="product-name" type="text" placeholder="Kiyim nomi" required>
+        <label class="admin-price-field"><span>Narxi</span><div><input id="product-price" type="number" placeholder="Raqam kiriting" min="1" step="0.01" required><select id="product-price-currency" aria-label="Narx valyutasi"><option value="uzs">So'm</option><option value="usd">Dollar ($)</option></select></div></label>
+        <input id="product-quantity" type="number" placeholder="Miqdori" min="1" value="1" required>
+        <input id="product-discount" type="number" placeholder="Chegirma %" min="0" max="99" value="0">
+        <label class="admin-checkbox"><input id="product-top" type="checkbox"> Top mahsulot</label>
+        <input id="product-material" type="text" placeholder="Materiali">
+        <input id="product-description" type="text" placeholder="Mahsulot tavsifi">
+        <fieldset class="image-upload-group">
+          <legend>Mahsulot uchun asosiy rasm</legend>
+          <input id="product-image" type="url" placeholder="Asosiy rasm URL manzili">
+          <label class="file-input-label">Kompyuterdan asosiy rasm<input id="product-image-file" type="file" accept="image/*"></label>
+        </fieldset>
+        <fieldset class="image-upload-group">
+          <legend>Karusel uchun alohida rasm</legend>
+          <input id="product-carousel-image" type="url" placeholder="Karusel rasm URL manzili">
+          <label class="file-input-label">Kompyuterdan karusel rasmi<input id="product-carousel-image-file" type="file" accept="image/*"></label>
+        </fieldset>
+        <fieldset class="image-upload-group gallery-upload-group">
+          <legend>Mahsulotning qo'shimcha rasmlari (2-5 ta)</legend>
+          <textarea id="product-gallery-images" placeholder="Qo'shimcha rasm URL manzillarini har qatorda yozing"></textarea>
+          <label class="file-input-label">Bir nechta rasm tanlash<input id="product-gallery-files" type="file" accept="image/*" multiple></label>
+        </fieldset>
+        <button type="submit" class="primary-button">Kiyim qo'shish</button>
+      </form>
+      <div class="admin-stats" aria-label="Admin statistikasi">
+        <div><span>Mahsulotlar</span><strong id="stat-products">0</strong></div>
+        <div><span>Buyurtmalar</span><strong id="stat-orders">0</strong></div>
+        <div><span>Aksiyadagi</span><strong id="stat-sales">0</strong></div>
+        <div><span>Yashirilgan</span><strong id="stat-hidden">0</strong></div>
+      </div>
+      <div id="admin-products" class="admin-products"></div>
+      <section class="admin-orders-section">
+        <div class="section-heading"><div><p class="eyebrow">Buyurtmalar</p><h2>Kelgan buyurtmalar</h2></div></div>
+        <div id="admin-orders" class="admin-orders"></div>
+      </section>
+    </section>
+
+  </main>
+
+  <section id="bag-store-page" class="bag-store-page hidden" aria-label="Kategoriya do'koni">
+    <header class="bag-store-header">
+      <a class="bag-store-logo" href="index.html">EMINAMAVI</a>
+      <a class="bag-store-back" href="index.html">Bosh sahifaga qaytish</a>
+    </header>
+    <div class="bag-store-content">
+      <div class="bag-store-intro">
+        <p class="eyebrow">EMINAMAVI collection</p>
+        <h1 id="store-category-title">Sumkalar</h1>
+        <p id="store-category-description">Har kuni uchun tanlangan mahsulotlar.</p>
+      </div>
+      <div class="bag-carousel-window"><div id="bag-carousel-track" class="bag-carousel-track"></div></div>
+      <div id="bag-carousel-dots" class="bag-carousel-dots" aria-label="Sumkalar karuseli"></div>
+      <div class="bag-shop-heading">
+        <h2 id="store-products-title">Barcha mahsulotlar</h2>
+        <span id="bag-product-count"></span>
+      </div>
+      <div id="bag-product-grid" class="bag-product-grid"></div>
+    </div>
+  </section>
+
+  <section id="about" class="about-section">
+    <p class="eyebrow">EMINAMAVI</p>
+    <h2>Biz haqimizda</h2>
+    <p>O'zingizga mos uslubni toping.</p>
+    <div class="about-details">
+      <div class="about-detail">
+        <span>Telefon</span>
+        <a href="tel:+998977239559">+998 97 723 95 59</a>
+      </div>
+      <div class="about-detail">
+        <span>Do'kon manzili</span>
+        <p>Toshkent shahri, Abu Sahiy bozori, 2-etaj, E71</p>
+      </div>
+      <div class="about-detail">
+        <span>Ish vaqti</span>
+        <p>Har kuni: 08:00 - 18:00</p>
+      </div>
+      <div class="about-detail">
+        <span>Telegram kanal</span>
+        <a class="social-link" href="https://t.me/ominabreand" target="_blank" rel="noreferrer"><img class="social-icon" src="https://cdn.simpleicons.org/telegram/ffffff" alt="Telegram"> t.me/ominabreand</a>
+      </div>
+      <div class="about-detail">
+        <span>Telegram lichka</span>
+        <a class="social-link" href="https://t.me/mirzayevanazokat" target="_blank" rel="noreferrer"><img class="social-icon" src="https://cdn.simpleicons.org/telegram/ffffff" alt="Telegram"> @mirzayevanazokat</a>
+      </div>
+      <div class="about-detail">
+        <span>Instagram</span>
+        <a class="social-link" href="https://instagram.com/emina_mavi_fashion" target="_blank" rel="noreferrer"><img class="social-icon" src="https://cdn.simpleicons.org/instagram/ffffff" alt="Instagram"> @emina_mavi_fashion</a>
+      </div>
+      <div class="about-detail about-order-info">
+        <span>Buyurtma berish</span>
+        <p>Buyurtma berish uchun Telegram orqali mahsulot nomi, kerakli soni va telefon raqamingizni yuboring.</p>
+      </div>
+    </div>
+  </section>
+
+  <div id="auth-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+    <div class="modal-card">
+      <button id="close-auth" class="close-button" aria-label="Oynani yopish">×</button>
+      <p class="eyebrow">EMINAMAVI account</p>
+      <h2 id="auth-title">Accountga kirish</h2>
+      <form id="auth-form">
+        <label for="auth-email">Email</label>
+        <input id="auth-email" type="email" placeholder="siz@example.com" required>
+        <label for="auth-password">Parol</label>
+        <input id="auth-password" type="password" placeholder="Parolingiz" required>
+        <button type="submit" class="primary-button">Kirish</button>
+        <p id="auth-message" class="form-message"></p>
+      </form>
+    </div>
+  </div>
+
+  <div id="profile-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="profile-title">
+    <div class="modal-card profile-card">
+      <button id="close-profile" class="close-button" aria-label="Profil oynasini yopish">×</button>
+      <div class="avatar">E</div>
+      <p class="eyebrow">Sizning profilingiz</p>
+      <h2 id="profile-title">Xush kelibsiz</h2>
+      <p id="profile-email" class="muted-text"></p>
+      <button id="user-logout" class="outline-button">Accountdan chiqish</button>
+    </div>
+  </div>
+
+  <div id="favorites-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="favorites-title">
+    <div class="modal-card favorites-modal-card">
+      <button id="close-favorites" class="close-button" aria-label="Sevimlilar oynasini yopish">×</button>
+      <p class="eyebrow">Saqlanganlar</p>
+      <h2 id="favorites-title">Sevimlilar</h2>
+      <div id="favorites-list" class="favorites-list"></div>
+    </div>
+  </div>
+
+  <div id="product-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="product-modal-title">
+    <div class="modal-card product-modal-card">
+      <button id="close-product" class="close-button" aria-label="Mahsulot oynasini yopish">×</button>
+      <img id="product-modal-image" class="product-modal-image" src="" alt="">
+      <div id="product-gallery" class="product-gallery"></div>
+      <div class="product-modal-content">
+        <p class="eyebrow" id="product-modal-category"></p>
+        <h2 id="product-modal-title"></h2>
+        <p id="product-modal-price" class="product-modal-price"></p>
+        <p id="product-modal-stock" class="muted-text"></p>
+        <p id="product-modal-material" class="product-modal-material"></p>
+        <p id="product-modal-description" class="product-modal-description"></p>
+        <input id="order-name" class="order-field" type="text" placeholder="Ismingiz">
+        <input id="order-phone" class="order-field" type="tel" placeholder="Telefon raqamingiz">
+        <input id="order-address" class="order-field" type="text" placeholder="Yetkazib berish manzili">
+        <div class="product-options">
+          <label for="product-color">Rang</label>
+          <select id="product-color"><option>Qora</option><option>Oq</option><option>Ko'k</option><option>Bej</option></select>
+          <label for="product-size">O'lcham</label>
+          <select id="product-size"><option>Universal</option><option>S</option><option>M</option><option>L</option><option>XL</option></select>
+        </div>
+        <label for="order-quantity">Miqdori</label>
+        <input id="order-quantity" class="order-quantity" type="number" min="1" value="1">
+        <div class="product-modal-actions">
+          <button id="favorite-button" class="outline-button" type="button">♡ Sevimli</button>
+          <button id="telegram-order-button" class="primary-button" type="button">Telegramda buyurtma</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
